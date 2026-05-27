@@ -44,7 +44,7 @@ This project translates 7 years of public ERCOT operational data into six quanti
 
 ![Deep Dive](powerbi_dashboard_deepdive.png)
 
-## For full interactivity, [explore the live dashboard →](https://app.powerbi.com/view?r=eyJrIjoiOWFlNTJmMDktY2U3MC00N2ZiLWE3ODQtZTk3NjhhMDRmZWM0IiwidCI6IjQ5MDgyZTYzLWM4NzEtNGMwZS1hNmNiLWRmODBmNTVmOGIyNSJ9)
+For full interactivity, [explore the live dashboard →](https://app.powerbi.com/view?r=eyJrIjoiOWFlNTJmMDktY2U3MC00N2ZiLWE3ODQtZTk3NjhhMDRmZWM0IiwidCI6IjQ5MDgyZTYzLWM4NzEtNGMwZS1hNmNiLWRmODBmNTVmOGIyNSJ9)
 
 ---
 
