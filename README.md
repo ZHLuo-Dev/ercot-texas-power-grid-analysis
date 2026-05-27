@@ -126,11 +126,11 @@ Summer peak occurs at **15:00 (19,151 MW)** while winter peak shifts to **18:00 
 
 ```
 ercot-texas-power-grid-analysis/
-├── data/                           # Raw ERCOT xlsx files (not tracked in Git)
+├── data/                                 # Raw ERCOT xlsx files (not tracked in Git)
 │   ├── Native_Load_2018.xlsx
 │   ├── ...
 │   └── Native_Load_2024.xlsx
-├── outputs/                        # Generated charts
+├── outputs/                              # Generated charts
 │   ├── ercot_yearly_trend.png
 │   ├── houston_hourly_pattern.png
 │   ├── ercot_zone_share.png
@@ -138,6 +138,8 @@ ercot-texas-power-grid-analysis/
 │   ├── zone_correlation.png
 │   └── seasonal_pattern.png
 ├── ercot_power_grid_analysis.ipynb       # Main notebook
+├── powerbi_dashboard_overview.png        # Power BI dashboard preview
+├── powerbi_dashboard_deepdive.png        # Power BI dashboard preview
 ├── requirements.txt
 ├── .gitignore
 └── README.md
