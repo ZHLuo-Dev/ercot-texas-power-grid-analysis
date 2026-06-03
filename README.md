@@ -30,7 +30,8 @@ This project translates 7 years of public ERCOT operational data into six quanti
 1. **Schema normalization** — Column naming convention changed across years (`HourEnding` in 2018-2020 vs `Hour Ending` with a space in 2021-2024); normalized before concatenation.
 2. **Time-series feature engineering** — Parsed timestamps and derived year, month, hour fields for grouping.
 3. **Six analytical views** — Yearly growth, hourly profile, regional share, extreme-weather impact, inter-zonal correlation, seasonal comparison.
-4. **Visualization** — matplotlib charts saved as PNGs under `outputs/` for reporting.
+4. **Trend modeling.** — Fit a linear regression on the annual average load from 2018 to 2024 to quantify the long term growth rate in MW per year.
+5. **Visualization** — matplotlib charts saved as PNGs under `outputs/` for reporting.
 
 ---
 
@@ -53,6 +54,8 @@ For full interactivity and detailed views, explore the [live dashboard](https://
 ### 1. Post-2022 Demand Growth Acceleration
 
 Statewide ERCOT demand grew **22.3%** from 2018 to 2024. Post-2022 annual growth averaged **5.47%**, roughly **3.8x** the pre-2022 baseline of **1.45%**. This structural shift aligns with the wave of large-scale data center openings in Texas (Meta/Fort Worth 2022, Amazon/Dallas 2022, Microsoft 2023, xAI 2024).
+
+A linear regression on the annual average load puts the long term growth at about 1,700 MW per year (R² = 0.90), projecting the 2025 statewide average at 53,665 MW.
 
 > **Strategic implication:** Post-2022 growth should be modeled as the new demand baseline for long-term capacity planning.
 
@@ -114,10 +117,9 @@ Summer peak occurs at **15:00 (19,151 MW)** while winter peak shifts to **18:00 
 
 ## Tech Stack
 
-- **Python 3** — Pandas, NumPy for data manipulation
-- **Matplotlib** — Time-series and comparative visualization
-- **openpyxl** — Excel file reading
-- **Jupyter Notebook** — Interactive analysis
+- **Python 3** — Pandas, NumPy
+- **scikit-learn** — Linear Regression
+- **Matplotlib** — visualization
 - **Power BI** — interactive dashboard with Power Query, DAX measures, and cross-filtering
 
 ---
@@ -131,6 +133,7 @@ ercot-texas-power-grid-analysis/
 │   ├── ...
 │   └── Native_Load_2024.xlsx
 ├── outputs/                              # Generated charts
+│   ├── ercot_linear_trend.png
 │   ├── ercot_yearly_trend.png
 │   ├── houston_hourly_pattern.png
 │   ├── ercot_zone_share.png
@@ -138,8 +141,8 @@ ercot-texas-power-grid-analysis/
 │   ├── zone_correlation.png
 │   └── seasonal_pattern.png
 ├── ercot_power_grid_analysis.ipynb       # Main notebook
-├── powerbi_dashboard_overview.png        # Power BI dashboard preview
-├── powerbi_dashboard_deepdive.png        # Power BI dashboard preview
+├── powerbi_dashboard_overview.png        # Dashboard preview
+├── powerbi_dashboard_deepdive.png        # Dashboard preview
 ├── requirements.txt
 ├── .gitignore
 └── README.md
