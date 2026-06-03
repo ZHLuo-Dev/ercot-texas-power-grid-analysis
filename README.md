@@ -30,7 +30,7 @@ This project translates 7 years of public ERCOT operational data into six quanti
 1. **Schema normalization** — Column naming convention changed across years (`HourEnding` in 2018-2020 vs `Hour Ending` with a space in 2021-2024); normalized before concatenation.
 2. **Time-series feature engineering** — Parsed timestamps and derived year, month, hour fields for grouping.
 3. **Six analytical views** — Yearly growth, hourly profile, regional share, extreme-weather impact, inter-zonal correlation, seasonal comparison.
-4. **Trend modeling.** — Fit a linear regression on the annual average load from 2018 to 2024 to quantify the long term growth rate in MW per year.
+4. **Trend modeling** — Fit a linear regression on the annual average load from 2018 to 2024 to quantify the long term growth rate in MW per year.
 5. **Visualization** — matplotlib charts saved as PNGs under `outputs/` for reporting.
 
 ---
@@ -55,7 +55,11 @@ For full interactivity and detailed views, explore the [live dashboard](https://
 
 Statewide ERCOT demand grew **22.3%** from 2018 to 2024. Post-2022 annual growth averaged **5.47%**, roughly **3.8x** the pre-2022 baseline of **1.45%**. This structural shift aligns with the wave of large-scale data center openings in Texas (Meta/Fort Worth 2022, Amazon/Dallas 2022, Microsoft 2023, xAI 2024).
 
+![Yearly Trend](outputs/ercot_yearly_trend.png)
+
 A linear regression on the annual average load puts the long term growth at about 1,700 MW per year (R² = 0.90), projecting the 2025 statewide average at 53,665 MW.
+
+![Linear Trend](outputs/ercot_linear_trend.png)
 
 > **Strategic implication:** Post-2022 growth should be modeled as the new demand baseline for long-term capacity planning.
 
