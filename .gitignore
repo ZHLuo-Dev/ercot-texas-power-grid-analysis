@@ -1,6 +1,7 @@
 # Data 
 data/*.xlsx
 data/*.csv
+data/datacenter/
 
 # Jupyter
 .ipynb_checkpoints/

@@ -29,7 +29,7 @@ This project translates 7 years of public ERCOT operational data into six quanti
 - Source: CBRE Research — North America Data Center Trends
   ([latest report](https://www.cbre.com/insights/books/north-america-data-center-trends-h2-2025))
 - Scope: H1 2018 – H2 2025, Dallas-Ft. Worth market
-- Volume: H1 2018 – H2 2025 (16 semi-annual observations)
+- Volume: 16 semi-annual observations
 - ERCOT hourly load was extended through 2025 to match the inventory coverage period for regression analysis
 - Inventory figures were anchored on CBRE-reported totals and chain-linked with semi-annual new delivery volumes from CBRE's historical market charts; all values were cross-validated against multiple reporting periods
 
