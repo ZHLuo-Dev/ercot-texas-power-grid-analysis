@@ -1,6 +1,6 @@
 # ERCOT Texas Grid Load Analysis (2018-2024)
 
-Analysis of **61,000+ hourly electricity load records** across **8 ERCOT weather zones** over 7 years, uncovering long-term demand trends, seasonal patterns, regional correlations, and grid vulnerabilities under extreme weather.
+Analysis of 61,000+ hourly electricity load records across 8 ERCOT weather zones over 7 years, uncovering long-term demand trends, the statistical link between data center expansion and regional load growth, seasonal patterns, regional correlations, and grid vulnerabilities under extreme weather.
 
 ---
 
@@ -18,10 +18,20 @@ This project translates 7 years of public ERCOT operational data into six quanti
 
 ## Data
 
-- **Source:** [ERCOT Hourly Load Data Archives](https://www.ercot.com/gridinfo/load/load_hist)
-- **Scope:** 2018-2024, 8 Weather Zones (COAST, NORTH, SOUTH, EAST, WEST, NCENT, SCENT, FWEST) plus statewide ERCOT total
-- **Volume:** 61,000+ hourly records
-- **Format:** 7 annual Excel files (one per year)
+**ERCOT Hourly Load**
+
+- Source: [ERCOT Hourly Load Data Archives](https://www.ercot.com/gridinfo/load/load_hist)
+- Scope: 2018–2024, 8 weather zones + statewide total
+- Volume: 61,000+ hourly records across 7 annual Excel files
+
+**DFW Data Center Inventory (for Multiple Regression)**
+
+- Source: CBRE Research — North America Data Center Trends
+  ([latest report](https://www.cbre.com/insights/books/north-america-data-center-trends-h2-2025))
+- Scope: H1 2018 – H2 2025, Dallas-Ft. Worth market
+- Volume: H1 2018 – H2 2025 (16 semi-annual observations)
+- ERCOT hourly load was extended through 2025 to match the inventory coverage period for regression analysis
+- Inventory figures were anchored on CBRE-reported totals and chain-linked with semi-annual new delivery volumes from CBRE's historical market charts; all values were cross-validated against multiple reporting periods
 
 ---
 
@@ -30,7 +40,7 @@ This project translates 7 years of public ERCOT operational data into six quanti
 1. **Schema normalization** — Column naming convention changed across years (`HourEnding` in 2018-2020 vs `Hour Ending` with a space in 2021-2024); normalized before concatenation.
 2. **Time-series feature engineering** — Parsed timestamps and derived year, month, hour fields for grouping.
 3. **Six analytical views** — Yearly growth, hourly profile, regional share, extreme-weather impact, inter-zonal correlation, seasonal comparison.
-4. **Trend modeling** — Fit a linear regression on the annual average load from 2018 to 2024 to quantify the long term growth rate in MW per year.
+4. **Trend modeling** — Linear regression on annual averages to quantify long-term growth; multiple regression on semi-annual NCENT load to test the statistical significance of DFW data center capacity as a demand predictor, controlling for time trend, seasonality, and post-2022 structural break.
 5. **Visualization** — matplotlib charts saved as PNGs under `outputs/` for reporting.
 
 ---
@@ -57,13 +67,23 @@ Statewide ERCOT demand grew **22.3%** from 2018 to 2024. Post-2022 annual growth
 
 ![Yearly Trend](outputs/ercot_yearly_trend.png)
 
-A linear regression on the annual average load puts the long term growth at about 1,700 MW per year (R² = 0.90), projecting the 2025 statewide average at 53,665 MW.
+A linear regression on the annual average load puts the long-term growth at
+about 1,700 MW per year (R² = 0.90, p = 0.001), projecting the 2025
+statewide average at 53,665 MW.
 
 ![Linear Trend](outputs/ercot_linear_trend.png)
 
-> **Strategic implication:** Post-2022 growth should be modeled as the new demand baseline for long-term capacity planning.
+To investigate whether data center expansion is a statistically significant
+driver, I built a multiple regression on semi-annual NCENT zone load using
+time trend, seasonality, a post-2022 structural break, and DFW data center
+inventory (MW) as predictors. Adding data center capacity improved the model
+(R² = 0.888 → 0.932); the data center coefficient is significant
+(β = 2.08, p = 0.022), indicating each additional MW of data center capacity
+is associated with approximately 2 MW of additional regional grid load.
 
-![Yearly Trend](outputs/ercot_yearly_trend.png)
+![Multiple Regression](outputs/ncent_multiple_regression.png)
+
+> **Strategic implication:** Post-2022 growth should be modeled as the new demand baseline for long-term capacity planning.
 
 ### 2. Houston Daily Load Profile
 
@@ -123,6 +143,7 @@ Summer peak occurs at **15:00 (19,151 MW)** while winter peak shifts to **18:00 
 
 - **Python 3** — Pandas, NumPy
 - **scikit-learn** — Linear Regression
+- **statsmodels** — Multiple Regression (OLS), VIF diagnostics
 - **Matplotlib** — visualization
 - **Power BI** — interactive dashboard with Power Query, DAX measures, and cross-filtering
 
@@ -132,18 +153,22 @@ Summer peak occurs at **15:00 (19,151 MW)** while winter peak shifts to **18:00 
 
 ```
 ercot-texas-power-grid-analysis/
-├── data/                                 # Raw ERCOT xlsx files (not tracked in Git)
+├── data/                                 # Not tracked in Git
 │   ├── Native_Load_2018.xlsx
 │   ├── ...
-│   └── Native_Load_2024.xlsx
+│   ├── Native_Load_2024.xlsx
+│   └── datacenter/
+│       ├── Native_Load_2025.xlsx
+│       └── dfw_datacenter_inventory.csv
 ├── outputs/                              # Generated charts
 │   ├── ercot_linear_trend.png
 │   ├── ercot_yearly_trend.png
-│   ├── houston_hourly_pattern.png
 │   ├── ercot_zone_share.png
+│   ├── houston_hourly_pattern.png
+│   ├── ncent_multiple_regression.png
+│   ├── seasonal_pattern.png
 │   ├── uri_analysis.png
-│   ├── zone_correlation.png
-│   └── seasonal_pattern.png
+│   └── zone_correlation.png
 ├── ercot_power_grid_analysis.ipynb       # Main notebook
 ├── powerbi_dashboard_overview.png        # Dashboard preview
 ├── powerbi_dashboard_deepdive.png        # Dashboard preview
@@ -152,4 +177,4 @@ ercot-texas-power-grid-analysis/
 └── README.md
 ```
 
-Note: the raw data files are not included in this repository. Download from the ERCOT source linked above.
+Note: Data files are not included in this repository. See the Data section above for sources and download links.
