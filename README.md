@@ -73,13 +73,9 @@ statewide average at 53,665 MW.
 
 ![Linear Trend](outputs/ercot_linear_trend.png)
 
-To investigate whether data center expansion is a statistically significant
-driver, I built a multiple regression on semi-annual NCENT zone load using
-time trend, seasonality, a post-2022 structural break, and DFW data center
-inventory (MW) as predictors. Adding data center capacity improved the model
-(R² = 0.888 → 0.932); the data center coefficient is significant
-(β = 2.08, p = 0.022), indicating each additional MW of data center capacity
-is associated with approximately 2 MW of additional regional grid load.
+The timing of this acceleration coincides with a wave of hyperscale data center deliveries in the DFW region beginning in 2022 — raising the question of whether this buildout is a statistically measurable driver of regional load growth.
+
+To investigate whether data center expansion is a statistically significant driver, I built a multiple regression on semi-annual NCENT zone load using time trend, seasonality, a post-2022 structural break, and DFW data center inventory (MW) as predictors. Adding data center capacity improved the model (R² = 0.888 → 0.932); the data center coefficient is significant (β = 2.08, p = 0.022), indicating each additional MW of data center capacity is associated with approximately 2 MW of additional regional grid load.
 
 ![Multiple Regression](outputs/ncent_multiple_regression.png)
 
